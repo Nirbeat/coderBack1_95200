@@ -1,5 +1,6 @@
 import express from "express";
 import { env } from "./config/env.js";
+import ProductManager from "./managers/ProductManager.js";
 
 const app = express();
 
@@ -7,61 +8,40 @@ app.listen(env.PORT, () => {
     console.log("server levantado en " + env.PORT);
 });
 
-// app.get("/", async (req, res, next) => {
-//     res.status(203).send("hola chicos de la 95200");
-//     // res.json({ mensaje: "hola chicos de la 95200" });
-//     // res.download("src/app.js");
-// });
+app.get("/", async (req, res, next) => {
+    try {
+        const products = await ProductManager.getProducts();
+        res.status(200).json(products);
+    } catch (error) {
+        next(error);
+    }
+});
 
-// const nombres = ["maxi", "lucas", "amadeo", "lucia"];
-// app.get("/parametro/:indiceNombres/:loquesea/:niidea", async (req, res, next) => {
-//     const { params } = req;
+app.post("/", async (req, res, next) => {
+    try {
+        const product = await ProductManager.createProduct(req.body);
+        res.status(201).json({ message: "producto creado", product });
+    } catch (error) {
+        next(error);
+    }
+});
 
-//     res.status(200).send("probando parametros en ruta. Nombre :" + nombres[params.indiceNombres] + params.loquesea + params.niidea)
-// });
+app.put("/:pid", async (req, res, next) => {
+    try {
+        const { pid } = req.params;
+        const updatedProduct = await ProductManager.updateProductById(pid, req.body);
+        res.status(200).json({ message: "producto actualizado", updatedProduct });
+    } catch (error) {
+        next(error);
+    }
+});
 
-// app.get("/query", async (req, res, next) => {
-//     const { query } = req;
-//     res.status(200).send(`valor de la query = ${query.numero}`);
-// });
-
-// app.use(express.json(), express.urlencoded({ extended: true }));
-
-// app.post("/",
-//     // express.json(),
-//     async (req, res, next) => {
-//         const { body } = req;
-//         res.json(body);
-//     });
-
-// app.put("/",
-//     // express.json(),
-//     async (req, res, next) => {
-//         const { body } = req;
-//         res.json(body);
-//     });
-
-// app.delete("/",
-//     // express.json(),
-//     async (req, res, next) => {
-//         const { body } = req;
-//         res.json(body);
-//     });
-
-// app.get("/middleware",
-//     (req, res, next) => {
-//         try {
-//             // proceso la informacion o ejecuto logica a mi gusto
-//             req.saludo = "hola";
-//             throw new Error("error a proposito");
-//         } catch (error) {
-//             next(error);
-//         }
-//     },
-//     async (req, res, next) => {
-//         res.status(200).send(req.saludo);
-//     });
-
-// app.use((err, req, res, next) => {
-//     res.status(500).json({ message: "error " + err.message });
-// });
+app.delete("/:pid", async (req, res, next) => {
+    try {
+        const { pid } = req.params;
+        const deletedProduct = await ProductManager.deleteProductById(pid);
+        res.status(200).json({ message: "producto actualizado", deletedProduct });
+    } catch (error) {
+        next(error);
+    }
+});
