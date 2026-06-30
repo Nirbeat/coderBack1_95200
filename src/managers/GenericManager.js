@@ -7,8 +7,8 @@ export class GenericManager {
 
         if (!fs.existsSync(this.filePath)) {
             fs.mkdir(__dirname + "/dao/data", () => {
-                fs.writeFileSync(`${__dirname}/dao/data/${path}`, JSON.stringify([]), { encoding: "utf-8" });
-                this.filePath = `${__dirname}/dao/data/${path}`
+                fs.writeFileSync(`${__dirname}/data/${path}`, JSON.stringify([]), { encoding: "utf-8" });
+                this.filePath = `${__dirname}/data/${path}`
             })
         }
     }

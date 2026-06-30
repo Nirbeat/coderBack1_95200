@@ -69,4 +69,4 @@ class CartManager extends GenericManager {
     }
 }
 
-export default new CartManager("data/carts.json");
+export default new CartManager("carts.json");

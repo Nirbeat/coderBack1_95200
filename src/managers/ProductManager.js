@@ -45,4 +45,4 @@ class ProductManager extends GenericManager {
     }
 }
 
-export default new ProductManager("data/products.json");
+export default new ProductManager("products.json");
