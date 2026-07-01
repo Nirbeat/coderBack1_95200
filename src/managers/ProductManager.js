@@ -31,7 +31,7 @@ class ProductManager extends GenericManager {
     async updateProductById(pid, updatedData) {
         const products = await this.getProducts();
         const requiredProductIndex = products.findIndex((product) => product.id == pid);
-        products[requiredProductIndex] = { ...updatedData, id: parseInt(pid) };
+        products[requiredProductIndex] = { ...products[requiredProductIndex], ...updatedData, id: parseInt(pid) };
         await fs.writeFile(this.filePath, JSON.stringify(products), { encoding: "utf-8" });
         return products[requiredProductIndex];
     }

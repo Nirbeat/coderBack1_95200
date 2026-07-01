@@ -3,10 +3,10 @@ import { __dirname } from "../utils.js";
 export class GenericManager {
 
     constructor(path) {
-        this.filePath = `${__dirname}/dao/data/${path}`;
+        this.filePath = `${__dirname}/data/${path}`;
 
         if (!fs.existsSync(this.filePath)) {
-            fs.mkdir(__dirname + "/dao/data", () => {
+            fs.mkdir(__dirname + "/data", () => {
                 fs.writeFileSync(`${__dirname}/data/${path}`, JSON.stringify([]), { encoding: "utf-8" });
                 this.filePath = `${__dirname}/data/${path}`
             })

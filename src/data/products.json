@@ -1,1 +1,50 @@
-[]
+[
+    {
+        "title": "título actualizado de nuevo",
+        "description": "este es mejor que el primero",
+        "price": 200,
+        "stock": 3,
+        "thumbnails": [
+            1,
+            2,
+            3,
+            "hola",
+            true
+        ],
+        "code": "abcd",
+        "category": "categoria maravillosa",
+        "id": 1
+    },
+    {
+        "title": "otro producto maravilloso mas",
+        "description": "este es mejor que el primero",
+        "price": 200,
+        "stock": 3,
+        "thumbnails": [
+            1,
+            2,
+            3,
+            "hola",
+            true
+        ],
+        "code": "abcd",
+        "category": "categoria maravillosa",
+        "id": 2
+    },
+    {
+        "title": "lafafhba",
+        "description": "este es mejor que el primero",
+        "price": 200,
+        "stock": 3,
+        "thumbnails": [
+            1,
+            2,
+            3,
+            "hola",
+            true
+        ],
+        "code": "abcd",
+        "category": "categoria maravillosa",
+        "id": 3
+    }
+]

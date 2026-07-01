@@ -41,8 +41,7 @@ class CartManager extends GenericManager {
         if (!requiredCart) return "el carrito solicitado no existe";
 
         const ProductManager = (await import("./ProductManager.js")).default;
-        const pm = new ProductManager("products.json");
-        const requiredProduct = await pm.getProductById(pid)
+        const requiredProduct = await ProductManager.getProductById(pid)
         if (!requiredProduct) return "el producto solicitado no existe";
 
         const { products } = requiredCart;

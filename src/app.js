@@ -1,46 +1,15 @@
 import express from "express";
 import { env } from "./config/env.js";
-import ProductManager from "./managers/ProductManager.js";
+import productsRouter from "./router/products.router.js";
+import cartsRouter from "./router/carts.router.js";
 const app = express();
 
 app.listen(env.PORT, () => {
     console.log("server levantado en " + env.PORT);
 });
 
-app.get("/api/products", async (req, res, next) => {
-    try {
-        const products = await ProductManager.getProducts();
-        res.status(200).json(products);
-    } catch (error) {
-        next(error);
-    }
-});
+// con esta linea el server entiende los body
+app.use(express.json(), express.urlencoded({ extended: true }));
 
-app.post("/api/products", async (req, res, next) => {
-    try {
-        const product = await ProductManager.createProduct(req.body);
-        res.status(201).json({ message: "producto creado", product });
-    } catch (error) {
-        next(error);
-    }
-});
-
-app.put("/api/products/:pid", async (req, res, next) => {
-    try {
-        const { pid } = req.params;
-        const updatedProduct = await ProductManager.updateProductById(pid, req.body);
-        res.status(200).json({ message: "producto actualizado", updatedProduct });
-    } catch (error) {
-        next(error);
-    }
-});
-
-app.delete("/api/products/:pid", async (req, res, next) => {
-    try {
-        const { pid } = req.params;
-        const deletedProduct = await ProductManager.deleteProductById(pid);
-        res.status(200).json({ message: "producto actualizado", deletedProduct });
-    } catch (error) {
-        next(error);
-    }
-});
+app.use("/api/products", productsRouter);
+app.use("/api/carts", cartsRouter);
