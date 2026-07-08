@@ -1,6 +1,6 @@
 import fs from "fs";
 import { __dirname } from "../utils.js";
-export class GenericManager {
+export class GenericDAO {
 
     constructor(path) {
         this.filePath = `${__dirname}/data/${path}`;

@@ -1,7 +1,7 @@
 import fs from "fs/promises";
-import { GenericManager } from "./GenericManager.js";
+import { GenericDAO } from "./GenericDAO.js";
 
-class ProductManager extends GenericManager {
+class ProductDAO extends GenericDAO {
 
     constructor(filePath) {
         super(filePath)
@@ -45,4 +45,4 @@ class ProductManager extends GenericManager {
     }
 }
 
-export default new ProductManager("products.json");
+export default new ProductDAO("products.json");

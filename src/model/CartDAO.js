@@ -1,7 +1,7 @@
 import fs from "fs/promises";
-import { GenericManager } from "./GenericManager.js";
+import { GenericDAO } from "./GenericDAO.js";
 
-class CartManager extends GenericManager {
+class CartDAO extends GenericDAO {
 
     constructor(filePath) {
         super(filePath)
@@ -38,11 +38,12 @@ class CartManager extends GenericManager {
 
     async addProductToCart(cid, pid) {
         let requiredCart = await this.getCartById(cid);
-        if (!requiredCart) return "el carrito solicitado no existe";
+        // if (!requiredCart) return "el carrito solicitado no existe";
 
-        const ProductManager = (await import("./ProductManager.js")).default;
-        const requiredProduct = await ProductManager.getProductById(pid)
-        if (!requiredProduct) return "el producto solicitado no existe";
+        // // esto deberia ir en otro lado
+        // const ProductDAO = (await import("./ProductDAO.js")).default;
+        // const requiredProduct = await ProductDAO.getProductById(pid);
+        // if (!requiredProduct) return "el producto solicitado no existe";
 
         const { products } = requiredCart;
 
@@ -68,4 +69,4 @@ class CartManager extends GenericManager {
     }
 }
 
-export default new CartManager("carts.json");
+export default new CartDAO("carts.json");
