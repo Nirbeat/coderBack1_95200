@@ -1,9 +1,18 @@
-import ProductServices from "../services/products.services.js";
+import { productService } from "../services/product.service.js";
 
 export async function getAllProducts(req, res, next) {
     try {
-        const products = await ProductServices.getAllProducts(req);
-        res.status(200).json(products);
+        const products = await productService.getProducts();
+        res.status(200).json({ status: "success", payload: products });
+    } catch (error) {
+        next(error);
+    }
+}
+
+export async function getProductById(req, res, next) {
+    try {
+        const product = await productService.getProductById(req.params.pid);
+        res.status(200).json({ status: "success", payload: product });
     } catch (error) {
         next(error);
     }
@@ -11,8 +20,8 @@ export async function getAllProducts(req, res, next) {
 
 export async function createProduct(req, res, next) {
     try {
-        const product = await ProductServices.createProduct(req.body);
-        res.status(201).json({ message: "producto creado", product });
+        const product = await productService.createProduct(req.body);
+        res.status(201).json({ status: "success", payload: product });
     } catch (error) {
         next(error);
     }
@@ -20,9 +29,8 @@ export async function createProduct(req, res, next) {
 
 export async function updateProduct(req, res, next) {
     try {
-        const { pid } = req.params;
-        const updatedProduct = await ProductServices.updateProductById(pid, req.body);
-        res.status(200).json({ message: "producto actualizado", updatedProduct });
+        const product = await productService.updateProduct(req.params.pid, req.body);
+        res.status(200).json({ status: "success", payload: product });
     } catch (error) {
         next(error);
     }
@@ -30,9 +38,8 @@ export async function updateProduct(req, res, next) {
 
 export async function deleteProduct(req, res, next) {
     try {
-        const { pid } = req.params;
-        const deletedProduct = await ProductServices.deleteProductById(pid);
-        res.status(200).json({ message: "producto actualizado", deletedProduct });
+        const product = await productService.deleteProduct(req.params.pid);
+        res.status(200).json({ status: "success", payload: product });
     } catch (error) {
         next(error);
     }
