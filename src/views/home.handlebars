@@ -1,0 +1,36 @@
+<h1>Home</h1>
+
+<section class="products" id="products">
+  {{#each products}}
+  <article class="product {{#unless status}}inactive{{/unless}}">
+    <div class="product-image">
+      <img src="" alt="">
+    </div>
+    <h2>{{title}}</h2>
+    <p>Precio: ${{price}}</p>
+    <p>Quedan {{stock}}</p>
+  </article>
+  {{/each}}
+</section>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  const socket = io();
+
+  socket.on("updated products", ({ products }) => {
+    let productsSection = document.getElementById("products");
+    productsSection.replaceChildren();
+
+    products.forEach((product) => {
+      productsSection.innerHTML += `
+        <article class="product ${ product.status ? "" : "inactive" }">
+          <div class="product-image">
+            <img src="" alt="">
+          </div>
+          <h2>${product.title}</h2>
+          <p>Precio: $${product.price}</p>
+          <p>Quedan ${product.stock}</p>
+        </article>
+      `
+    });
+  });
+</script>

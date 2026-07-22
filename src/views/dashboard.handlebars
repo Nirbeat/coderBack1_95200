@@ -1,0 +1,36 @@
+<h1>Dashboard</h1>
+
+<section class="products" id="products">
+  {{#each products}}
+    <article class="product">
+      <h2>{{title}}</h2>
+      <h2>{{status}}</h2>
+      <button onclick="disableProduct('{{_id}}')">Desactivar producto</button>
+    </article>
+  {{/each}}
+</section>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  //iniciamos la conexion desde nuestro cliente
+  const socket = io();
+
+  function disableProduct(id){
+    socket.emit("update product", { id, status: false });
+  }
+
+  socket.on("updated products", ({ products })=> {
+    let productsSection = document.getElementById("products");
+    productsSection.replaceChildren();
+
+    products.forEach((product)=> {
+      productsSection.innerHTML += `
+        <article class="product">
+          <h2>${product.title}</h2>
+          <h2>${product.status}</h2>
+          <button onclick="disableProduct('${product._id}')">Desactivar producto</button>
+        </article>
+      `
+    });
+  });
+</script>
