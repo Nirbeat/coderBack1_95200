@@ -6,8 +6,11 @@ class ProductRepository {
     this.products = productModel;
   }
 
-  async getAll() {
-    return this.products.find().lean();
+  async getAll(category, maxPrice, limit, page) {
+    return this.products.paginate({
+      ...( category && { category } ),
+      ...( maxPrice && { price: { $lte: Number(maxPrice) } } )
+    }, { limit, page });
   }
 
   async getById(id) {

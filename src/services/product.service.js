@@ -6,8 +6,8 @@ class ProductService {
     this.productRepository = productRepository;
   }
 
-  async getProducts() {
-    return this.productRepository.getAll();
+  async getProducts(category, maxPrice, limit, page) {
+    return this.productRepository.getAll(category, maxPrice, limit, page);
   }
 
   async getProductById(id) {
