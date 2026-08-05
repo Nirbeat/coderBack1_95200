@@ -6,11 +6,19 @@ class ProductRepository {
     this.products = productModel;
   }
 
-  async getAll(category, maxPrice, limit, page) {
+  async getAll(category, maxPrice, limit, page, sortBy = "createdAt", order = "asc") {
+
+    const sortOrder = order === "asc" ? 1 : -1;
+
     return this.products.paginate({
       ...( category && { category } ),
       ...( maxPrice && { price: { $lte: Number(maxPrice) } } )
-    }, { limit, page });
+    }, { 
+      limit,
+      page,
+      sort: { [sortBy]: sortOrder },
+      lean: true
+    });
   }
 
   async getById(id) {
